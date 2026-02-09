@@ -57,6 +57,65 @@ const commands = [
             option.setName('question')
                 .setDescription('Ваш вопрос')
                 .setRequired(true)),
+
+    new SlashCommandBuilder()
+        .setName('punishments')
+        .setDescription('Показать список наказанных пользователей'),
+
+    new SlashCommandBuilder()
+        .setName('warns')
+        .setDescription('Показать количество нарушений пользователя')
+        .addUserOption(option =>
+            option.setName('user')
+                .setDescription('Пользователь')
+                .setRequired(true)),
+
+    new SlashCommandBuilder()
+        .setName('clear-warns')
+        .setDescription('Сбросить количество нарушений пользователя')
+        .addUserOption(option =>
+            option.setName('user')
+                .setDescription('Пользователь')
+                .setRequired(true)),
+
+    new SlashCommandBuilder()
+        .setName('unmute')
+        .setDescription('Снять мут (тайм-аут) с пользователя')
+        .addUserOption(option =>
+            option.setName('user')
+                .setDescription('Пользователь')
+                .setRequired(true)),
+
+    new SlashCommandBuilder()
+        .setName('words')
+        .setDescription('Управление запрещенными словами')
+        .addSubcommand(sub =>
+            sub.setName('list')
+                .setDescription('Список запрещенных слов'))
+        .addSubcommand(sub =>
+            sub.setName('add')
+                .setDescription('Добавить запрещенное слово')
+                .addStringOption(opt => opt.setName('word').setDescription('Слово').setRequired(true)))
+        .addSubcommand(sub =>
+            sub.setName('remove')
+                .setDescription('Удалить запрещенное слово')
+                .addStringOption(opt => opt.setName('word').setDescription('Слово').setRequired(true))),
+
+    new SlashCommandBuilder()
+        .setName('user-info')
+        .setDescription('Информация о пользователе')
+        .addUserOption(option =>
+            option.setName('user')
+                .setDescription('Пользователь')
+                .setRequired(true)),
+
+    new SlashCommandBuilder()
+        .setName('ping')
+        .setDescription('Проверить задержку бота'),
+
+    new SlashCommandBuilder()
+        .setName('my-stats')
+        .setDescription('Показать мою статистику нарушений'),
 ].map(command => command.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_BOT_TOKEN);

@@ -7,6 +7,7 @@ import { getViolationForgivenessDays } from './config.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = join(__dirname, '..', 'data');
 const VIOLATIONS_FILE = join(DATA_DIR, 'violations.json');
+const PUNISHMENTS_FILE = join(DATA_DIR, 'punishments.json');
 
 // Ensure data directory exists
 async function ensureDataDir() {
@@ -49,6 +50,31 @@ export async function saveViolationCounts(countsMap) {
     await fs.writeFile(VIOLATIONS_FILE, JSON.stringify(obj, null, 2), 'utf-8');
   } catch (error) {
     console.error('Ошибка при сохранении истории нарушений:', error);
+  }
+}
+
+export async function loadPunishments() {
+  await ensureDataDir();
+  if (!existsSync(PUNISHMENTS_FILE)) {
+    return new Map();
+  }
+  try {
+    const rawData = await fs.readFile(PUNISHMENTS_FILE, 'utf-8');
+    const obj = JSON.parse(rawData);
+    return new Map(Object.entries(obj));
+  } catch (error) {
+    console.error('Ошибка при загрузке списка наказаний:', error);
+    return new Map();
+  }
+}
+
+export async function savePunishments(punishmentsMap) {
+  await ensureDataDir();
+  try {
+    const obj = Object.fromEntries(punishmentsMap);
+    await fs.writeFile(PUNISHMENTS_FILE, JSON.stringify(obj, null, 2), 'utf-8');
+  } catch (error) {
+    console.error('Ошибка при сохранении списка наказаний:', error);
   }
 }
 

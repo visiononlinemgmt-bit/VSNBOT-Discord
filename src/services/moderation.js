@@ -5,9 +5,11 @@ export function normalizeText(text) {
     if (!text) return '';
     return text
         .toLowerCase()
-        .normalize('NFD') // Decompose combined characters (e.g. "é" -> "e" + "´")
+        .normalize('NFD') // Decompose combined characters
         .replace(/[\u0300-\u036f]/g, "") // Remove combining diacritical marks
-        .replace(/\s+/g, ' ')
+        .replace(/[^a-zа-я0-9\s]/g, '') // Remove most punctuation/symbols (leaving spaces for now)
+        .replace(/\s+/g, '') // Remove all whitespace for deep matching
+        .replace(/(.)\1+/g, '$1') // Collapse repeated characters: "ппииддоор" -> "пидор"
         .trim();
 }
 
