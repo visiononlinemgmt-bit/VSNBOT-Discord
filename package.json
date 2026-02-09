@@ -1,0 +1,23 @@
+{
+  "name": "discord-mod-bot",
+  "version": "1.0.0",
+  "description": "Discord bot: forbidden words auto-mute + rules update notifications",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node --dns-result-order=ipv4first src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "moderation"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.6.1",
+    "openai": "^6.18.0"
+  }
+}
