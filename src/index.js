@@ -3,6 +3,7 @@ import {
   Client,
   GatewayIntentBits,
   Partials,
+  PermissionFlagsBits,
 } from 'discord.js';
 import {
   loadConfig,
@@ -320,7 +321,7 @@ client.on('interactionCreate', async (interaction) => {
 
   // Helper: check if user is admin or has one of the allowed roles
   const isAuthorized = (member) => {
-    if (member.permissions.has(GatewayIntentBits.Administrator)) return true;
+    if (member.permissions.has(PermissionFlagsBits.Administrator)) return true;
     if (!config) return false;
     return member.roles.cache.some(role => config.allowedRoleIds.includes(role.id));
   };
@@ -348,7 +349,7 @@ client.on('interactionCreate', async (interaction) => {
 
       const memberRoles = interaction.member.roles.cache;
       const hasAIRole = memberRoles.some((role) => aiConfig.allowedRoleIds.includes(role.id));
-      if (!hasAIRole && !interaction.member.permissions.has(GatewayIntentBits.Administrator)) {
+      if (!hasAIRole && !interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
         return interaction.reply({ content: 'У вас нет прав на использование команды /ask.', ephemeral: true });
       }
 
@@ -371,7 +372,7 @@ client.on('interactionCreate', async (interaction) => {
 
       const botMember = interaction.guild.members.me;
 
-      if (targetMember.roles.highest.position >= interaction.member.roles.highest.position && !interaction.member.permissions.has(GatewayIntentBits.Administrator)) {
+      if (targetMember.roles.highest.position >= interaction.member.roles.highest.position && !interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
         return interaction.reply({ content: 'Нельзя применить/снять санкции к пользователю с ролью выше или равной вашей.', ephemeral: true });
       }
 
