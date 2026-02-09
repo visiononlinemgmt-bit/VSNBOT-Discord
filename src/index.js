@@ -330,7 +330,7 @@ client.on('interactionCreate', async (interaction) => {
   // 1. Access Control Logic for ALL commands except /my-stats
   if (commandName !== 'my-stats') {
     // Check Channel Restriction (only for moderation commands)
-    const modCommands = ['chsp', 'chs', 'btd', 'forgive', 'punishments', 'warns', 'clear-warns', 'unmute', 'words'];
+    const modCommands = ['chsp', 'chs', 'btd', 'forgive', 'punishments', 'clear-warns', 'unmute', 'words'];
     if (modCommands.includes(commandName) && config && interaction.channelId !== config.allowedChannelId) {
       return interaction.reply({ content: 'Эту команду нельзя использовать в этом канале.', ephemeral: true });
     }
